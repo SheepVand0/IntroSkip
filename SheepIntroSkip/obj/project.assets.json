@@ -1426,11 +1426,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\lphel\\Desktop\\Files\\Codes\\RandomProjects\\SheepIntroSkip\\SheepIntroSkip\\SheepIntroSkip.csproj",
+      "projectUniqueName": "C:\\Users\\lphel\\Documents\\GitHub\\IntroSkip\\SheepIntroSkip\\SheepIntroSkip.csproj",
       "projectName": "SheepIntroSkip",
-      "projectPath": "C:\\Users\\lphel\\Desktop\\Files\\Codes\\RandomProjects\\SheepIntroSkip\\SheepIntroSkip\\SheepIntroSkip.csproj",
+      "projectPath": "C:\\Users\\lphel\\Documents\\GitHub\\IntroSkip\\SheepIntroSkip\\SheepIntroSkip.csproj",
       "packagesPath": "C:\\Users\\lphel\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\lphel\\Desktop\\Files\\Codes\\RandomProjects\\SheepIntroSkip\\SheepIntroSkip\\obj\\",
+      "outputPath": "C:\\Users\\lphel\\Documents\\GitHub\\IntroSkip\\SheepIntroSkip\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "configFilePaths": [
@@ -1448,6 +1448,11 @@
         "net48": {
           "projectReferences": {}
         }
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {

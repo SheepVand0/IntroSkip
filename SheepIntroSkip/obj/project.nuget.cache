@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "4MpxmhHK83idIsmjHssEO7JJlsHj1cqnZtr3dKwE5NZAj65GgOzwwebA+vMGzAzuwyLV4/6Xguu43BjKBbFm9Q==",
+  "dgSpecHash": "STgKG64b5Doei+YvejMAe9fvKfKAI4Eb0zgpqtvVNkk/jmwqm0c6NGUl/JVVYJT+GCwyVdnFInXrX/vTeCwLFA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\lphel\\Desktop\\Files\\Codes\\RandomProjects\\SheepIntroSkip\\SheepIntroSkip\\SheepIntroSkip.csproj",
+  "projectFilePath": "C:\\Users\\lphel\\Documents\\GitHub\\IntroSkip\\SheepIntroSkip\\SheepIntroSkip.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\lphel\\.nuget\\packages\\beatsabermoddingtools.tasks\\2.0.0-beta1\\beatsabermoddingtools.tasks.2.0.0-beta1.nupkg.sha512",
     "C:\\Users\\lphel\\.nuget\\packages\\microsoft.build.framework\\16.5.0\\microsoft.build.framework.16.5.0.nupkg.sha512",

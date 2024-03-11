@@ -13,11 +13,9 @@ namespace SheepIntroSkip.Harmony
     {
         public static void Postfix(ref PracticeSettings practiceSettings)
         {
-            return;
-
-            if (practiceSettings.startInAdvanceAndClearNotes == false)
+            Plugin.Log.Info($"Is in practice : {practiceSettings != null}");
+            if (practiceSettings == null)
             {
-                
                 ParseBeatmap.s_IsPractice = false;
                 ParseBeatmap.s_MapStartTime = 0;
             } else
@@ -41,12 +39,10 @@ namespace SheepIntroSkip.Harmony
         public static void Postfix()
         {
             Plugin.Log.Info("Checking");
-            s_MapStartTime = Time.deltaTime;
             if (s_Beatmap == null)
                 return;
             Plugin.s_SkipabbleTimes.Clear();
-            float l_LastElementBeat = -1f;
-
+            
             s_Bpm = s_Beatmap.level.beatsPerMinute;
             List<float> l_ElementsTime = new List<float>();
             Dictionary<float, float> l_BpmChanges = new Dictionary<float, float>();
@@ -58,6 +54,7 @@ namespace SheepIntroSkip.Harmony
             //StartedFromPractice.s_StartedFromPractice;
             //ObjectsGrabber.GamePlayerData.practiceSettings.startSongTime;
 
+            float l_LastElementBeat = -1f;
             l_ElementsTime.Sort();
             foreach (float l_ElementBeat in l_ElementsTime)
             {
@@ -74,7 +71,7 @@ namespace SheepIntroSkip.Harmony
                 if (l_LastElementBeat == -1.0f)
                 {
                     l_LastElementBeat = l_ElementBeat;
-                    if (GetTimeFromBeat(l_LastElementBeat, s_Bpm) >= 3.0f)
+                    if (GetTimeFromBeat(l_LastElementBeat, s_Bpm) - s_MapStartTime >= 3.0f)
                         Plugin.s_SkipabbleTimes.Add(new Plugin.SkippableTime(0.0f, GetTimeFromBeat(l_LastElementBeat, s_Bpm) - 0.9f));
                     continue;
                 }

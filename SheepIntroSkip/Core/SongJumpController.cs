@@ -1,4 +1,4 @@
-﻿using BeatSaberPlus.SDK.Game;
+﻿using CP_SDK_BS.Game;
 using IPA.Utilities;
 using SheepIntroSkip.Harmony;
 using System;
