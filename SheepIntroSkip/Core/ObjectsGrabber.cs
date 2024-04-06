@@ -23,19 +23,19 @@ namespace SheepIntroSkip.Core
         {
             try
             {
-                ObjectsGrabber.ObjectSpawnController = ((IEnumerable<BeatmapObjectSpawnController>)Resources.FindObjectsOfTypeAll<BeatmapObjectSpawnController>()).FirstOrDefault<BeatmapObjectSpawnController>();
-                ObjectsGrabber.CallbacksController = ObjectsGrabber.ObjectSpawnController.GetField<BeatmapCallbacksController, BeatmapObjectSpawnController>("_beatmapCallbacksController");
-                ObjectsGrabber.GameSongControllerObj = ((IEnumerable<GameSongController>)Resources.FindObjectsOfTypeAll<GameSongController>()).FirstOrDefault<GameSongController>();
-                ObjectsGrabber.AudioTimeSyncControlleObj = ((IEnumerable<AudioTimeSyncController>)Resources.FindObjectsOfTypeAll<AudioTimeSyncController>()).FirstOrDefault<AudioTimeSyncController>();
-                ObjectsGrabber.GamePlayerData = ((IEnumerable<PlayerDataModel>)Resources.FindObjectsOfTypeAll<PlayerDataModel>()).First<PlayerDataModel>().playerData;
-                ObjectsGrabber.ObjectsSpawnMovementData = ObjectsGrabber.ObjectSpawnController.GetField<BeatmapObjectSpawnMovementData, BeatmapObjectSpawnController>("_beatmapObjectSpawnMovementData");
-                ObjectsGrabber.GameAudioSource = ObjectsGrabber.AudioTimeSyncControlleObj.GetField<AudioSource, AudioTimeSyncController>("_audioSource");
+                ObjectSpawnController = Resources.FindObjectsOfTypeAll<BeatmapObjectSpawnController>().FirstOrDefault();
+                CallbacksController = ObjectSpawnController.GetField<BeatmapCallbacksController, BeatmapObjectSpawnController>("_beatmapCallbacksController");
+                GameSongControllerObj = Resources.FindObjectsOfTypeAll<GameSongController>().FirstOrDefault();
+                AudioTimeSyncControlleObj = Resources.FindObjectsOfTypeAll<AudioTimeSyncController>().FirstOrDefault();
+                GamePlayerData = Resources.FindObjectsOfTypeAll<PlayerDataModel>().First().playerData;
+                ObjectsSpawnMovementData = ObjectSpawnController.GetField<BeatmapObjectSpawnMovementData, BeatmapObjectSpawnController>("_beatmapObjectSpawnMovementData");
+                GameAudioSource = AudioTimeSyncControlleObj.GetField<AudioSource, AudioTimeSyncController>("_audioSource");
                 foreach (Saber saber in Resources.FindObjectsOfTypeAll<Saber>())
                 {
                     if (saber.saberType == SaberType.SaberA)
-                        ObjectsGrabber.LeftSaber = saber;
+                        LeftSaber = saber;
                     else
-                        ObjectsGrabber.RightSaber = saber;
+                        RightSaber = saber;
                 }
             }
             catch (Exception ex)

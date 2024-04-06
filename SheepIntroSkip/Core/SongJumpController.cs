@@ -1,5 +1,6 @@
 ﻿using CP_SDK_BS.Game;
 using IPA.Utilities;
+using SheepIntroSkip.Config;
 using SheepIntroSkip.Harmony;
 using System;
 using System.Threading.Tasks;
@@ -33,7 +34,7 @@ namespace SheepIntroSkip.Core
             SkipFloatingScreenParent.Instance.gameObject.SetActive(true);
 
             m_Waiting = true;
-            await Task.Delay(700);
+            await Task.Delay(ISConfig.Instance.PressDuration);
             m_WaitingForSkip = true;
 
             bool l_Continue = false;

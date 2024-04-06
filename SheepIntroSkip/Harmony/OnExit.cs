@@ -10,7 +10,7 @@ namespace SheepIntroSkip.Harmony
         public static void Postfix()
         {
             StartedFromPractice.s_StartedFromPractice = false;
-            if (!((Object)SongJumpController.Instance != (Object)null))
+            if (!(SongJumpController.Instance != null))
                 return;
             SongJumpController.Instance.m_Waiting = false;
         }

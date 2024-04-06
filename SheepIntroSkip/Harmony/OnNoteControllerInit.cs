@@ -6,6 +6,6 @@ namespace SheepIntroSkip.Harmony
     [HarmonyPatch(typeof(NoteController), "Init")]
     internal class OnNoteControllerInit
     {
-        public static void Prefix() => SongJumpController.Instance.m_Waiting = false;
+        public static void Postfix(ref NoteData noteData) => SongJumpController.Instance.m_Waiting = noteData.cutDirection == NoteCutDirection.None;
     }
 }

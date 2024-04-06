@@ -421,3 +421,8 @@ SheepIntroSkip/obj/SheepIntroSkip.csproj.nuget.g.props
 *.cache
 SheepIntroSkip/obj/project.assets.json
 .vs/SheepIntroSkip/v17/.suo
+
+*.pdb
+.vs
+/.vs
+.vs/SheepIntroSkip/v17/.suo

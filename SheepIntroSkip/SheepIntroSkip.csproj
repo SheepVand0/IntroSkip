@@ -218,6 +218,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config\ISConfig.cs" />
     <Compile Include="Core\ObjectsGrabber.cs" />
     <Compile Include="Core\OnMenuInstallerPatch.cs" />
     <Compile Include="Core\SkipFloatingScreenParent.cs" />
@@ -232,7 +233,6 @@
     <Compile Include="Harmony\OnBombCut.cs" />
     <Compile Include="Harmony\OnBombPassed.cs" />
     <Compile Include="Harmony\OnExit.cs" />
-    <Compile Include="Harmony\OnGameStarted.cs" />
     <Compile Include="Harmony\OnNoteControllerInit.cs" />
     <Compile Include="Harmony\OnNoteCut.cs" />
     <Compile Include="Harmony\OnNoteMissed.cs" />
@@ -241,6 +241,7 @@
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SkipModule.cs" />
+    <Compile Include="UI\SettingsView.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="manifest.json" />

@@ -1,5 +1,6 @@
 ﻿using BeatmapSaveDataVersion3;
 using HarmonyLib;
+using SheepIntroSkip.Config;
 using SheepIntroSkip.Core;
 using System;
 using System.Collections.Generic;
@@ -79,8 +80,8 @@ namespace SheepIntroSkip.Harmony
                 float l_ElementTime = GetTimeFromBeat(l_ElementBeat, s_Bpm);
                 if (l_ElementTime < s_MapStartTime) continue;
                 float l_LastElementTime = GetTimeFromBeat(l_LastElementBeat, s_Bpm);
-                if (l_ElementTime - l_LastElementTime >= 3.0 && l_ElementTime != l_LastElementTime)
-                    Plugin.s_SkipabbleTimes.Add(new Plugin.SkippableTime(l_LastElementTime, l_ElementTime - 0.9f));
+                if (l_ElementTime - l_LastElementTime >= ISConfig.Instance.MinimumDelayToBeSkippable && l_ElementTime != l_LastElementTime)
+                    Plugin.s_SkipabbleTimes.Add(new Plugin.SkippableTime(l_LastElementTime, l_ElementTime - ISConfig.Instance.BeforeNoteTime));
 
                 l_LastElementBeat = l_ElementBeat;
             }
