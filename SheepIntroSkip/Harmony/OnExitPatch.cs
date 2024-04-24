@@ -5,14 +5,15 @@ using UnityEngine;
 namespace SheepIntroSkip.Harmony
 {
     [HarmonyPatch(typeof(PracticeViewController), "DidDeactivate")]
-    internal class OnExit
+    internal class OnExitPatch
     {
         public static void Postfix()
         {
-            StartedFromPractice.s_StartedFromPractice = false;
+            StartedFromPracticePatch.StartedFromPractice = false;
             if (!(SongJumpController.Instance != null))
                 return;
-            SongJumpController.Instance.m_Waiting = false;
+
+            SongJumpController.Instance.Waiting = false;
         }
     }
 }

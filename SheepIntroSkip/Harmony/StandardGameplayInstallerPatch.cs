@@ -6,7 +6,7 @@ using Zenject;
 namespace SheepIntroSkip.Core
 {
     [HarmonyPatch(typeof(StandardGameplayInstaller), "InstallBindings")]
-    public static class OnMenuInstallerPatch
+    public static class StandardGameplayInstallerPatch
     {
         private static readonly PropertyInfo s_ContainerPropertyInfo = typeof(MonoInstallerBase).GetProperty("Container", BindingFlags.Instance | BindingFlags.NonPublic);
 
@@ -23,6 +23,6 @@ namespace SheepIntroSkip.Core
             }
         }
 
-        private static DiContainer GetContainer(this MonoInstallerBase p_MonoInstallerBase) => (DiContainer)OnMenuInstallerPatch.s_ContainerPropertyInfo.GetValue((object)p_MonoInstallerBase);
+        private static DiContainer GetContainer(this MonoInstallerBase p_MonoInstallerBase) => (DiContainer)StandardGameplayInstallerPatch.s_ContainerPropertyInfo.GetValue((object)p_MonoInstallerBase);
     }
 }

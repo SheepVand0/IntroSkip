@@ -45,5 +45,10 @@ namespace SheepIntroSkip.UI
             ).BuildUI(transform);
         }
 
+        protected override void OnViewDeactivation()
+        {
+            ISConfig.Instance.Save();
+        }
+
     }
 }

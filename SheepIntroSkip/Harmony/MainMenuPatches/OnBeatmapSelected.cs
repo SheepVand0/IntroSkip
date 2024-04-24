@@ -9,12 +9,12 @@ namespace SheepIntroSkip.Harmony
         {
             try
             {
-                ParseBeatmap.s_Beatmap = (CustomDifficultyBeatmap)difficultyBeatmap;
+                ParseBeatmap.CurrentBeatmap = (CustomDifficultyBeatmap)difficultyBeatmap;
             }
             catch
             {
                 Plugin.Log.Error("Not a custom song");
-                ParseBeatmap.s_Beatmap = (CustomDifficultyBeatmap)null;
+                ParseBeatmap.CurrentBeatmap = (CustomDifficultyBeatmap)null;
             }
         }
     }

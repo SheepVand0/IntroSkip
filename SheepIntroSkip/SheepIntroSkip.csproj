@@ -219,29 +219,31 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\ISConfig.cs" />
+    <Compile Include="Core\BeatmapHelper\BeatmapHelper.cs" />
     <Compile Include="Core\ObjectsGrabber.cs" />
-    <Compile Include="Core\OnMenuInstallerPatch.cs" />
-    <Compile Include="Core\SkipFloatingScreenParent.cs" />
-    <Compile Include="Core\SongJumpController.cs" />
-    <Compile Include="Core\TextViewController.cs" />
-    <Compile Include="Core\WaitUtils.cs" />
+    <Compile Include="Harmony\BeatmapSpawnObjectControllerPatch.cs" />
+    <Compile Include="Harmony\StandardGameplayInstallerPatch.cs" />
+    <Compile Include="Core\UI\FloatingScreen\SkipFloatingScreenParent.cs" />
+    <Compile Include="Core\Controllers\SongJumpController.cs" />
+    <Compile Include="Core\UI\Views\TextViewController.cs" />
+    <Compile Include="Utils\WaitUtils.cs" />
     <Compile Include="Core\ZenjectGrabber.cs" />
     <Compile Include="Core\ZenjectGrabberInstaller.cs" />
-    <Compile Include="Harmony\NoteCutSoundEffectManagerFix2.cs" />
-    <Compile Include="Harmony\NoteCutSoundEffectManagerFix.cs" />
-    <Compile Include="Harmony\OnBeatmapSelected.cs" />
-    <Compile Include="Harmony\OnBombCut.cs" />
-    <Compile Include="Harmony\OnBombPassed.cs" />
-    <Compile Include="Harmony\OnExit.cs" />
-    <Compile Include="Harmony\OnNoteControllerInit.cs" />
-    <Compile Include="Harmony\OnNoteCut.cs" />
-    <Compile Include="Harmony\OnNoteMissed.cs" />
-    <Compile Include="Harmony\ParseBeatmap.cs" />
-    <Compile Include="Harmony\StartedFromPractice.cs" />
+    <Compile Include="Harmony\Notes\NoteCutSoundEffectManagerFix2.cs" />
+    <Compile Include="Harmony\Notes\NoteCutSoundEffectManagerFix.cs" />
+    <Compile Include="Harmony\MainMenuPatches\OnBeatmapSelected.cs" />
+    <Compile Include="Harmony\Bombs\OnBombCut.cs" />
+    <Compile Include="Harmony\Bombs\OnBombPassed.cs" />
+    <Compile Include="Harmony\OnExitPatch.cs" />
+    <Compile Include="Harmony\Notes\OnNoteControllerInit.cs" />
+    <Compile Include="Harmony\Notes\OnNoteCut.cs" />
+    <Compile Include="Harmony\Notes\OnNoteMissed.cs" />
+    <Compile Include="Core\BeatmapHelper\ParseBeatmap.cs" />
+    <Compile Include="Harmony\StartedFromPracticePatch.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SkipModule.cs" />
-    <Compile Include="UI\SettingsView.cs" />
+    <Compile Include="Core\UI\Views\SettingsView.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="manifest.json" />

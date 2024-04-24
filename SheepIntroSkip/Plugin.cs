@@ -9,8 +9,6 @@ namespace SheepIntroSkip
     [Plugin(RuntimeOptions.SingleStartInit)]
     public class Plugin
     {
-        internal static List<Plugin.SkippableTime> s_SkipabbleTimes = new List<Plugin.SkippableTime>();
-        internal static List<Plugin.SkippableTime> s_BaseSkipabbleTimes = new List<Plugin.SkippableTime>();
         internal HarmonyLib.Harmony HarmonyInstance = new HarmonyLib.Harmony("sheepvand.bs.introskip");
 
         internal static Plugin Instance { get; private set; }
@@ -33,18 +31,5 @@ namespace SheepIntroSkip
 
         [OnExit]
         public void OnApplicationExit() => this.HarmonyInstance.UnpatchSelf();
-
-        public struct SkippableTime
-        {
-            public SkippableTime(float p_Time, float p_ToTime)
-            {
-                this.Time = p_Time;
-                this.ToTime = p_ToTime;
-            }
-
-            public float Time { get; set; }
-
-            public float ToTime { get; set; }
-        }
     }
 }
