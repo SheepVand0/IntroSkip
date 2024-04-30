@@ -15,12 +15,24 @@ namespace SheepIntroSkip.Core
         /// <summary>
         /// I forgot what this variable is useful for, but it's here
         /// </summary>
-        internal bool Waiting = false;
+        //internal bool Waiting = false;
 
         /// <summary>
         /// Waiting for the user to skip
         /// </summary>
         internal bool WaitingForSkip = false;
+
+        /// <summary>
+        /// The time you will go to if you skip
+        /// </summary>
+        internal float NextTime { get; private set; } = -1;
+
+        internal float CannotSkipAnymoreTime { get; private set; } = -1;
+
+        /// <summary>
+        /// This could help you
+        /// </summary>
+        TextViewController.EValueType AnyInformation = TextViewController.EValueType.Nothing;
 
         ////////////////////////////////////////////////
         ///////////////////////////////////////////////
@@ -28,13 +40,77 @@ namespace SheepIntroSkip.Core
         public void Awake()
         {
             Instance = this;
-            Logic.OnLevelEnded += p_LevelCompletion => Waiting = false;
+            Logic.OnLevelEnded += p_LevelCompletion => SetCannotSkip();
         }
 
         ////////////////////////////////////////////////
         ///////////////////////////////////////////////
 
-        public async void SetCanSkip(float p_EndTime, TextViewController.EValueType anyInformation)
+        protected float CurrentSkipTime;
+        protected float LastTime;
+
+        public void Update()
+        {
+            ManualUpdate();
+            LastTime = Time.realtimeSinceStartup;
+        }
+
+        private void ManualUpdate()
+        {
+            if (!WaitingForSkip) return;
+
+            if (ObjectsGrabber.GameAudioSource.time >= CannotSkipAnymoreTime)
+            {
+                SetCannotSkip();
+                return;
+            }
+
+            if (Input.GetKey(KeyCode.J) || Input.GetAxis("TriggerLeftHand") > 0.80f || Input.GetAxis("TriggerRightHand") > 0.80f)
+            {
+                if (CurrentSkipTime < ISConfig.Instance.PressDuration)
+                {
+                    CurrentSkipTime += (Time.realtimeSinceStartup - LastTime);
+                }
+                else
+                {
+                    Skip(NextTime);
+                    SetCannotSkip();
+                    CurrentSkipTime = 0;
+                }
+
+                return;
+            }
+
+            CurrentSkipTime = 0;
+        }
+
+        public void SetCanSkip(float time, TextViewController.EValueType anyInformation)
+        {
+            WaitingForSkip = true;
+            NextTime = time;
+            AnyInformation = anyInformation;
+
+            ObjectsGrabber.GrabObjects();
+            CannotSkipAnymoreTime = time - ObjectsGrabber.ObjectSpawnController.beatmapObjectSpawnMovementData.jumpDuration;
+
+            SkipFloatingScreenParent.Instance.Show(anyInformation);
+        }
+
+        public void SetCannotSkip()
+        {
+            WaitingForSkip = false;
+            SkipFloatingScreenParent.Instance.Hide();
+        }
+
+        public void Skip(float time)
+        {
+            AudioSource l_AudioSource = ObjectsGrabber.GameSongControllerObj
+                .GetField<AudioTimeSyncController, GameSongController>("_audioTimeSyncController")
+                .GetField<AudioSource, AudioTimeSyncController>("_audioSource");
+            l_AudioSource.time = time;
+        }
+
+        /*public async void SetCanSkip(float p_EndTime, TextViewController.EValueType anyInformation)
         {
             await Task.Delay(500);
 
@@ -55,6 +131,7 @@ namespace SheepIntroSkip.Core
                 if (!Waiting)
                 {
                     WaitingForSkip = false;
+                    l_Continue = false;
                     return true;
                 }
 
@@ -67,9 +144,10 @@ namespace SheepIntroSkip.Core
                 return true;
             }, 1);
 
+            SkipFloatingScreenParent.Instance.Hide();
+
             Waiting = false;
             WaitingForSkip = false;
-            SkipFloatingScreenParent.Instance.Hide();
             if (!l_Continue)
                 return;
 
@@ -82,6 +160,6 @@ namespace SheepIntroSkip.Core
             await Task.Delay(500);
 
             NoteCutSoundEffectManagerFix.m_Disabled = true;
-        }
+        }*/
     }
 }

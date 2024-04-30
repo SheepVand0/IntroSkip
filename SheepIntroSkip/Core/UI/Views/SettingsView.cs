@@ -16,10 +16,10 @@ namespace SheepIntroSkip.UI
             Templates.FullRectLayoutMainView(
                 XUIText.Make("Delay before pressing trigger works: "),
                 XUISlider.Make()
-                    .SetMinValue(1)
-                    .SetMaxValue(1000)
+                    .SetMinValue(0)
+                    .SetMaxValue(1)
+                    .SetIncrements(0.1f)
                     .SetValue(ISConfig.Instance.PressDuration)
-                    .SetInteger(true)
                     .OnValueChanged(x =>
                     {
                         ISConfig.Instance.PressDuration = (int)x;

@@ -409,8 +409,8 @@ SheepIntroSkip/obj/
 
 
 
-/SheepIntroSkip/bin
-/SheepIntroSkip/bin/Debug
+SheepIntroSkip/bin
+SheepIntroSkip/bin/Debug
 SheepIntroSkip/bin/Debug/SheepIntroSkip.pdb
 *.pdb
 SheepIntroSkip/bin/Debug/Artifact/Plugins/SheepIntroSkip.pdb
@@ -426,3 +426,11 @@ SheepIntroSkip/obj/project.assets.json
 .vs
 /.vs
 .vs/SheepIntroSkip/v17/.suo
+
+/SheepIntroSkip/bin/Debug/Artifact/Plugins
+/SheepIntroSkip/bin/Debug/Artifact/Plugins
+/SheepIntroSkip/bin/Debug/Artifact/Plugins
+/SheepIntroSkip/bin/Debug/Artifact/Plugins
+/SheepIntroSkip/bin/Debug/Artifact/Plugins
+/SheepIntroSkip/bin
+SheepIntroSkip/bin/Debug/Artifact/Plugins/SheepIntroSkip.dll

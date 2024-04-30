@@ -13,7 +13,7 @@ namespace SheepIntroSkip.Config
         public override string GetRelativePath()
             => "IntroSkip";
 
-        [JsonProperty] internal int PressDuration = 500;
+        [JsonProperty] internal float PressDuration = 0.5f;
         [JsonProperty] internal float BeforeNoteTime = 2;
         [JsonProperty] internal float MinimumDelayToBeSkippable = 3;
     }

@@ -45,9 +45,16 @@ namespace SheepIntroSkip.Harmony
             if (beatmap == null)
                 return new List<SkippableTime>();
 
-            List<float> l_ElementsTime = new List<float>();
+            /// Bombs and notes beats
+            List<float> l_ElementsBeats = new List<float>();
+
+            /// BPM changes list, with the beat of change
             List<BPMInterval> l_BPMS = new List<BPMInterval>();
 
+            /// Annoying walls
+            List<(float, float)> l_AnnoyingWalls = new List<(float, float)>();
+
+            /// Getting base bpm
             BPMInterval l_FirstInterval = new BPMInterval()
             {
                 StartBeat = 0,
@@ -57,6 +64,7 @@ namespace SheepIntroSkip.Harmony
 
             l_BPMS.Add(l_FirstInterval);
 
+            /// Parsing bpms
             for (int l_i = 0; l_i < beatmap.beatmapSaveData.bpmEvents.Count; l_i++)
             {
                 var x = beatmap.beatmapSaveData.bpmEvents[l_i];
@@ -77,49 +85,48 @@ namespace SheepIntroSkip.Harmony
                 l_BPMS.Add(l_Interval);
             };
 
-            foreach (var l_Item in l_BPMS)
-                Plugin.Log.Info($"BPM : {l_Item}");
-
+            /// Getting notes
             beatmap.beatmapSaveData.colorNotes.ForEach(p_Index => {
                 if (GetTimeFromBeat(p_Index.beat, l_BPMS) > MapStartTime) 
-                    l_ElementsTime.Add(p_Index.beat); }
+                    l_ElementsBeats.Add(p_Index.beat); }
             );
 
-            beatmap.beatmapSaveData.bombNotes.ForEach(p_Index => { if (GetTimeFromBeat(p_Index.beat, l_BPMS) > MapStartTime && p_Index.layer != 0) l_ElementsTime.Add(p_Index.beat); });
+            /// Getting Walls
+            beatmap.beatmapSaveData.bombNotes.ForEach(p_Index => { if (GetTimeFromBeat(p_Index.beat, l_BPMS) > MapStartTime && p_Index.layer != 0) l_ElementsBeats.Add(p_Index.beat); });
             
 
             ObjectsGrabber.GrabObjects();
-
-            //StartedFromPractice.s_StartedFromPractice;
-            //ObjectsGrabber.GamePlayerData.practiceSettings.startSongTime;
 
             TextViewController.EValueType l_AnyInformationToHelpOurPoorPlayer = TextViewController.EValueType.Nothing;
 
 
 
             float l_LastElementBeat = -1f;
-            //l_ElementsTime.Sort();
-            foreach (float l_ElementBeat in l_ElementsTime)
+            foreach (float l_ElementBeat in l_ElementsBeats)
             {
                 if (l_LastElementBeat == -1.0f)
                 {
                     l_LastElementBeat = l_ElementBeat;
                     float l_Time = GetTimeFromBeat(l_LastElementBeat, l_BPMS);
                     if (l_Time - MapStartTime >= 3.0f)
+                    {
                         l_SkippableTimes.Add(new SkippableTime(0.0f, l_Time - 0.9f));
+                    }
                     continue;
                 }
 
                 float l_ElementTime = GetTimeFromBeat(l_ElementBeat, l_BPMS);
+
                 if (l_ElementTime < MapStartTime) continue;
+
                 float l_LastElementTime = GetTimeFromBeat(l_LastElementBeat, l_BPMS);
                 if (l_ElementTime - l_LastElementTime >= ISConfig.Instance.MinimumDelayToBeSkippable && l_ElementTime != l_LastElementTime)
                     l_SkippableTimes.Add(new SkippableTime(l_LastElementTime, l_ElementTime - ISConfig.Instance.BeforeNoteTime));
 
                 l_LastElementBeat = l_ElementBeat;
             }
-            if (beatmap.level.songDuration - GetTimeFromBeat(l_ElementsTime.Last(), l_BPMS) > 3.0)
-                l_SkippableTimes.Add(new SkippableTime(GetTimeFromBeat(l_ElementsTime.Last(), l_BPMS), CurrentBeatmap.level.songDuration - 0.9f));
+            if (beatmap.level.songDuration - GetTimeFromBeat(l_ElementsBeats.Last(), l_BPMS) > 3.0)
+                l_SkippableTimes.Add(new SkippableTime(GetTimeFromBeat(l_ElementsBeats.Last(), l_BPMS), CurrentBeatmap.level.songDuration - 0.9f));
 
             if (l_SkippableTimes.Any())
             {
