@@ -100,43 +100,73 @@ namespace SheepIntroSkip.Harmony
             TextViewController.EValueType l_AnyInformationToHelpOurPoorPlayer = TextViewController.EValueType.Nothing;
 
 
-
+            /// Parse notes
             float l_LastElementBeat = -1f;
             foreach (float l_ElementBeat in l_ElementsBeats)
             {
+                TextViewController.EValueType l_ValueType = TextViewController.EValueType.Nothing;
+
+                /// Check Obstacles
+                /*beatmap.beatmapSaveData.obstacles.ForEach(x =>
+                {
+                    float l_WallTime = GetTimeFromBeat(x.beat, l_BPMS);
+                    if (l_WallTime <= GetTimeFromBeat(l_ElementBeat, l_BPMS) + ISConfig.Instance.BeforeNoteTime && GetTimeFromBeat(x.beat + x.duration, l_BPMS) > l_WallTime)
+                    {
+                        if (x.width > 1 && x.line == 0)
+                        {
+                            l_ValueType = TextViewController.EValueType.LeanRight;
+                            return;
+                        }
+
+                        if (x.width > 1 && x.line >= 2)
+                        {
+                            l_ValueType = TextViewController.EValueType.LeanLeft;
+                            return;
+                        }
+
+                        if (x.width == 1 && x.line == 1)
+                        {
+                            l_ValueType = TextViewController.EValueType.LeanRight;
+                            return;
+                        }
+
+                        if (x.width == 1 && x.line == 2)
+                        {
+                            l_ValueType = TextViewController.EValueType.LeanLeft;
+                            return;
+                        }
+                    }
+                });*/
+
+                /// Check map begin
                 if (l_LastElementBeat == -1.0f)
                 {
                     l_LastElementBeat = l_ElementBeat;
                     float l_Time = GetTimeFromBeat(l_LastElementBeat, l_BPMS);
                     if (l_Time - MapStartTime >= 3.0f)
                     {
-                        l_SkippableTimes.Add(new SkippableTime(0.0f, l_Time - 0.9f));
+                        l_SkippableTimes.Add(new SkippableTime(0.0f, l_Time - ISConfig.Instance.BeforeNoteTime, l_ValueType));
                     }
                     continue;
                 }
 
+                /// Get note or bomb time from beat
                 float l_ElementTime = GetTimeFromBeat(l_ElementBeat, l_BPMS);
 
+                /// Ignore elements before the beginning
                 if (l_ElementTime < MapStartTime) continue;
 
+                /// If the delay between two notes is too high, this delay is marked as "can be skipped"
                 float l_LastElementTime = GetTimeFromBeat(l_LastElementBeat, l_BPMS);
                 if (l_ElementTime - l_LastElementTime >= ISConfig.Instance.MinimumDelayToBeSkippable && l_ElementTime != l_LastElementTime)
-                    l_SkippableTimes.Add(new SkippableTime(l_LastElementTime, l_ElementTime - ISConfig.Instance.BeforeNoteTime));
+                    l_SkippableTimes.Add(new SkippableTime(l_LastElementTime, l_ElementTime - ISConfig.Instance.BeforeNoteTime, l_ValueType));
 
                 l_LastElementBeat = l_ElementBeat;
             }
-            if (beatmap.level.songDuration - GetTimeFromBeat(l_ElementsBeats.Last(), l_BPMS) > 3.0)
-                l_SkippableTimes.Add(new SkippableTime(GetTimeFromBeat(l_ElementsBeats.Last(), l_BPMS), CurrentBeatmap.level.songDuration - 0.9f));
 
-            if (l_SkippableTimes.Any())
-            {
-                SkippableTime l_First = l_SkippableTimes.First();
-                if (l_First.Time == 0.0)
-                {
-                    SongJumpController.Instance.SetCanSkip(l_First.ToTime, TextViewController.EValueType.Nothing);
-                    l_SkippableTimes.RemoveAt(0);
-                }
-            }
+            /// Checking if the end of the map can be skipped
+            if (beatmap.level.songDuration - GetTimeFromBeat(l_ElementsBeats.Last(), l_BPMS) > 3.0)
+                l_SkippableTimes.Add(new SkippableTime(GetTimeFromBeat(l_ElementsBeats.Last(), l_BPMS), CurrentBeatmap.level.songDuration - 0.9f, TextViewController.EValueType.Nothing));
 
             return l_SkippableTimes;
         }
@@ -155,14 +185,16 @@ namespace SheepIntroSkip.Harmony
 
         public struct SkippableTime
         {
-            public SkippableTime(float p_Time, float p_ToTime)
+            public SkippableTime(float p_Time, float p_ToTime, TextViewController.EValueType anyInformation)
             {
                 Time = p_Time;
                 ToTime = p_ToTime;
+                AnyInformation = anyInformation;
             }
 
             public float Time;
             public float ToTime;
+            public TextViewController.EValueType AnyInformation;
         }
 
         public struct BPMInterval

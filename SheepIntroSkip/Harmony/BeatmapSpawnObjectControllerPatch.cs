@@ -1,9 +1,4 @@
 ﻿using HarmonyLib;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SheepIntroSkip.Harmony
 {
@@ -13,8 +8,8 @@ namespace SheepIntroSkip.Harmony
         public static void Postfix()
         {
             ParseBeatmap.SkippableTimes = ParseBeatmap.Parse(ParseBeatmap.CurrentBeatmap);
+
+            ParseBeatmap.CheckPartCanBeSkipped(0, ref ParseBeatmap.SkippableTimes);
         }
-
-
     }
 }

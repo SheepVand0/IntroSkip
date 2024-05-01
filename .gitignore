@@ -434,3 +434,4 @@ SheepIntroSkip/obj/project.assets.json
 /SheepIntroSkip/bin/Debug/Artifact/Plugins
 /SheepIntroSkip/bin
 SheepIntroSkip/bin/Debug/Artifact/Plugins/SheepIntroSkip.dll
+*.dll
